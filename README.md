@@ -1,2 +1,2 @@
 # linkedin-auto-like
-Puppeteer is used to like company posts
+Puppeteer script is used to like recent company posts.

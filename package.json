@@ -1,0 +1,19 @@
+{
+  "name": "linkedin-auto-like",
+  "version": "1.0.0",
+  "description": "Puppeteer is used to like company posts",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-personal:vishnu-kyatannawar/linkedin-auto-like.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^14.4.1"
+  }
+}
