@@ -30,6 +30,8 @@ const password = argv[3];
   }  
 
   await page.goto(pageLink, { waitUntil: 'networkidle0' });
+  // Sometimes noticed that instead of sign in we see join now page
+  // If that happens we can use the below line of code to redirect to sign in page
   // await page.click('[data-tracking-control-name="auth_wall_desktop_company-login-toggle"]');
   await page.type('#username', username);
   await page.type('#password', password);
