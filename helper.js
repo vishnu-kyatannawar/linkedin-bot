@@ -41,8 +41,19 @@ async function scrollUntilElement(page, scrollElementQuerySelector, elementXPath
   return true;
 }
 
+async function likePosts(page) {
+  await page.evaluate(() => {
+    // Fetch all post like buttons which are not liked yet
+    let likeButtons = document.querySelectorAll('span.reactions-react-button > button[aria-pressed = "false"]');
+    likeButtons.forEach((likeButton) => {
+      likeButton.click();
+    });    
+  });
+}
+
 export const helper = {
   // All helper methods will be added here
   delay: delay,
-  scrollUntilElement: scrollUntilElement
+  scrollUntilElement: scrollUntilElement,
+  likePosts: likePosts
 };

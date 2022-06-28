@@ -52,13 +52,17 @@ const password = argv[3];
   // Now we have to scroll down till the last liked post
   // It does not guarantee that it will cover all posts, since there might be posts which are liked manually in between
   // Also we don't want to scroll through all the posts
-  const likedButtonXpath = '//span[contains(@class, "reactions-react-button feed-shared-social-action-bar__action-button")]/button[@aria-pressed = "true"]'
+  const likedButtonXpath = '//span[contains(@class, "reactions-react-button")]/button[@aria-pressed = "true"]'
   const elementFound = await helper.scrollUntilElement(page, 'html', likedButtonXpath);
 
+  // Case when there is no history of last liked post
   if (!elementFound) {
     console.log('We did not find any previously liked post');
   }
 
-  await helper.delay(5000);
+  await helper.likePosts(page);
+
+  console.log('Liked all new posts');
+  await helper.delay(2000);
   await browser.close();
 })();
