@@ -4,7 +4,8 @@ import puppeteer from 'puppeteer';
 const debuggingMode = true;
 
 // Company posts page
-const pageLink = 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all';
+const loginPage = 'https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin';
+const pageLink = 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all'
 const username = argv[2];
 const password = argv[3];
 
@@ -15,7 +16,7 @@ const password = argv[3];
     // Allow user to see what is happening on the browser
     launchOptions.headless = false;
     // slow down by 350ms
-    launchOptions.slowMo = 100;
+    launchOptions.slowMo = 10;
   }
 
   // Create a browser instance
@@ -27,24 +28,36 @@ const password = argv[3];
   // Set view port so that we can see what our script is doing
   if (debuggingMode) {
     await page.setViewport({ width: 1920, height: 1080 });
-  }  
+  }
 
-  await page.goto(pageLink, { waitUntil: 'networkidle0' });
-  await helper.delay(5000);
-  // Sometimes noticed that instead of sign in we see join now page
-  // If that happens we can use the below line of code to redirect to sign in page
-  // await page.click('[data-tracking-control-name="auth_wall_desktop_company-login-toggle"]');
+  await page.goto(loginPage, { waitUntil: 'networkidle0' });
   await page.type('#username', username);
   await page.type('#password', password);
-  await page.click('button[type=submit]');
-  
+  await Promise.all([
+    page.click('button[type=submit]'),
+    page.waitForNavigation({ waitUntil: 'networkidle2' })
+  ]);
+
+  // Now go to company page link since we are signed in
+  await page.goto(pageLink);
+
   // Wait until the company post page loads 
   await page.waitForSelector('button[data-control-name="feed_sort_dropdown_trigger"]', { visible: true, timeout: 0 });
-  
+
   // Click on sort dropdown and click on recent posts
   await page.click('button[data-control-name="feed_sort_dropdown_trigger"]');
   const sortDropDown = await page.$x('//button[contains(., "Recent")]');
   await sortDropDown[0].click();
+
+  // Now we have to scroll down till the last liked post
+  // It does not guarantee that it will cover all posts, since there might be posts which are liked manually in between
+  // Also we don't want to scroll through all the posts
+  const likedButtonXpath = '//span[contains(@class, "reactions-react-button feed-shared-social-action-bar__action-button")]/button[@aria-pressed = "true"]'
+  const elementFound = await helper.scrollUntilElement(page, 'html', likedButtonXpath);
+
+  if (!elementFound) {
+    console.log('We did not find any previously liked post');
+  }
 
   await helper.delay(5000);
   await browser.close();
