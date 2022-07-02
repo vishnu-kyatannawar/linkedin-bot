@@ -1,10 +1,11 @@
+import { argv } from 'node:process';
 import { helper } from './helper.js';
 import puppeteer from 'puppeteer';
 const debuggingMode = true;
 
 // Company posts page
 const loginPage = 'https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin';
-const pageLink = 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all'
+const pageLink = argv[2];
 const emailAddress = process.env.LINKEDIN_EMAIL_ADDRESS;
 const password = process.env.LINKEDIN_PASSWORD;
 
