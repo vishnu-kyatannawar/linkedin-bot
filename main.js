@@ -1,4 +1,3 @@
-import { argv } from 'node:process';
 import { helper } from './helper.js';
 import puppeteer from 'puppeteer';
 const debuggingMode = true;
@@ -6,8 +5,8 @@ const debuggingMode = true;
 // Company posts page
 const loginPage = 'https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin';
 const pageLink = 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all'
-const username = argv[2];
-const password = argv[3];
+const emailAddress = process.env.LINKEDIN_EMAIL_ADDRESS;
+const password = process.env.LINKEDIN_PASSWORD;
 
 (async () => {
   const launchOptions = {};
@@ -31,7 +30,7 @@ const password = argv[3];
   }
 
   await page.goto(loginPage, { waitUntil: 'networkidle0' });
-  await page.type('#username', username);
+  await page.type('#username', emailAddress);
   await page.type('#password', password);
   await Promise.all([
     page.click('button[type=submit]'),
