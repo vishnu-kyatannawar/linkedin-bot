@@ -4,6 +4,7 @@ on:
   # Triggers the workflow every 5 minutes
   schedule:
     - cron: "*/5 * * * *"
+  workflow_dispatch: # Run workflow manually (without waiting for the cron to be called), through the Github Actions Workflow page directly
 
 jobs:
   cron:
@@ -11,15 +12,14 @@ jobs:
     runs-on: ubuntu-latest    
 
     steps:
+    - name: Like Incident Reporter 365 Posts
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
           node-version: 16    
-    - run: npm ci
-    
-    - name: Like Incident Reporter 365 Posts
-      env:
+    - run: npm ci   
+    - env:
         LINKEDIN_EMAIL_ADDRESS: ${{ secrets.LINKEDIN_EMAIL_ADDRESS }}
         LINKEDIN_PASSWORD: ${{ secrets.LINKEDIN_PASSWORD }}
-      run: node main.js 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all'
+    - run: node main.js 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all'
       
