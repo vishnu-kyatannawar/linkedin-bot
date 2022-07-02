@@ -12,7 +12,10 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/main.js",
-            "args": ["<email_address>", "<password>"]
+            "env": {
+                "LINKEDIN_EMAIL_ADDRESS": "<Email Address>",
+                "LINKEDIN_PASSWORD": "<Password>"
+            }
         }
     ]
 }
