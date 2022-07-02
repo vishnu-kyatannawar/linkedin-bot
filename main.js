@@ -10,6 +10,7 @@ const emailAddress = process.env.LINKEDIN_EMAIL_ADDRESS;
 const password = process.env.LINKEDIN_PASSWORD;
 
 (async () => {
+  console.log(`Started script at ${new Date()}`);
   const launchOptions = {};
 
   if (debuggingMode) {
