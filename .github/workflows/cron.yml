@@ -9,7 +9,11 @@ on:
 jobs:
   cron:
 
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
+    
+    env:
+      LINKEDIN_EMAIL_ADDRESS: ${{ secrets.LINKEDIN_EMAIL_ADDRESS }}
+      LINKEDIN_PASSWORD: ${{ secrets.LINKEDIN_PASSWORD }}
 
     steps:    
     - uses: actions/checkout@v3
