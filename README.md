@@ -23,7 +23,7 @@ This script uses headless chrome to automate user actions to like linkedIn posts
 # Usage
 
 ```
-node main.js "<linkedIn email address>" "<password>"
+LINKEDIN_EMAIL_ADDRESS='<linkedIn email address>' LINKEDIN_PASSWORD='<password>' node main.js '<LinkedIn Company Posts URL>'
 ```
 
 # Todos
