@@ -17,9 +17,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
           node-version: 16    
-    - run: npm ci   
-    - env:
-        LINKEDIN_EMAIL_ADDRESS: ${{ secrets.LINKEDIN_EMAIL_ADDRESS }}
-        LINKEDIN_PASSWORD: ${{ secrets.LINKEDIN_PASSWORD }}
-    - run: node main.js 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all'
+    - run: npm ci
+    - run: node main.js 'https://www.linkedin.com/company/incidentreporter365/posts/?feedView=all'   
       
