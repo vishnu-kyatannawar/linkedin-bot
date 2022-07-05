@@ -47,6 +47,9 @@ const password = process.env.LINKEDIN_PASSWORD;
 
   // Click on sort dropdown and click on recent posts
   await page.click('button[data-control-name="feed_sort_dropdown_trigger"]');
+
+  // FIXME: Checking if dropdown is show after some delay, so added this delay
+  await helper.delay(3000);
   const sortDropDown = await page.$x('//button[contains(., "Recent")]');
   await sortDropDown[0].click();
 
