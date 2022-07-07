@@ -41,13 +41,32 @@ async function scrollUntilElement(page, scrollElementQuerySelector, elementXPath
   return true;
 }
 
-async function likePosts(page) {
-  await page.evaluate(() => {
+async function shareAndLike(page) {
+  await page.evaluate(async () => {
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
     // Fetch all post like buttons which are not liked yet
     let likeButtons = document.querySelectorAll('span.reactions-react-button > button[aria-pressed = "false"]');
-    likeButtons.forEach((likeButton) => {
-      likeButton.click();
-    });    
+
+    // Function to like and share
+    async function shareAndLike () {
+      for (i = 0; i < likeButtons.length; i++) {
+        let currPostLikeBtn = likeButtons[i];
+        let shareIcon = currPostLikeBtn.closest('div.feed-shared-social-actions').querySelector('[type="share-linkedin-icon"]');
+	      shareIcon.click();
+
+        // Wait for 0.5 seconds and then click on repost and like button
+        await delay(1000);	      
+	      let reportBtn = shareIcon.closest('.feed-shared-social-action-bar__action-button').querySelector('div.social-reshare-button__sharing-as-is-dropdown-item');
+	      reportBtn.click()        
+        currPostLikeBtn.click();
+
+        // Wait for 0.5 seconds and then move to next button
+        await delay(1000);
+      }      
+    }
+    
+    await shareAndLike();
   });
 }
 
@@ -55,5 +74,5 @@ export const helper = {
   // All helper methods will be added here
   delay: delay,
   scrollUntilElement: scrollUntilElement,
-  likePosts: likePosts
+  shareAndLike: shareAndLike
 };

@@ -64,9 +64,9 @@ const password = process.env.LINKEDIN_PASSWORD;
     console.log('We did not find any previously liked post');
   }
 
-  await helper.likePosts(page);
+  await helper.shareAndLike(page);
 
-  console.log('Liked all new posts');
+  console.log('Liked and shared all new posts');
   await helper.delay(2000);
   await browser.close();
 })();
