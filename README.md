@@ -32,5 +32,5 @@ LINKEDIN_EMAIL_ADDRESS='<linkedIn email address>' LINKEDIN_PASSWORD='<password>'
 - [ ] Clear error handling
 - [ ] Docker setup
 - [ ] Move to typescript
-- [ ] Re-share posts
+- [x] Re-share posts
 - [ ] Notification in case of error
