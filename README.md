@@ -1,8 +1,8 @@
-# linkedin-auto-like
-Puppeteer script is used to like recent company posts.
+# linkedin-bot
+Puppeteer script is used to like and repost recent company posts.
 
 # About the script
-This script uses headless chrome to automate user actions to like linkedIn posts of a company.
+This script uses headless chrome to automate user actions to like and repost linkedIn posts of a company.
 
 # Requirements
 
@@ -17,7 +17,7 @@ This script uses headless chrome to automate user actions to like linkedIn posts
 - Sort posts by recent posts
 - Scroll down until we find a post which is liked previously
 - If there is no previously liked post then we stop after 20 scrolls (approx 20 posts)
-- Like all new posts (considering any post as new which is not liked previously)
+- Repost and like all new posts (considering any post as new which is not liked previously)
 - Close the browser
 
 # Usage
