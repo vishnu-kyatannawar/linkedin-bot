@@ -1,6 +1,6 @@
 {
   "name": "linkedin-auto-like",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Puppeteer is used to like company posts",
   "main": "main.js",
   "type": "module",
