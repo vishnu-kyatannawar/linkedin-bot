@@ -42,7 +42,7 @@ const password = process.env.LINKEDIN_PASSWORD;
   // Now go to company page link since we are signed in
   await page.goto(pageLink);
 
-  // Wait until the company post page loads 
+  // Wait until the company post page loads
   await page.waitForSelector('button[data-control-name="feed_sort_dropdown_trigger"]', { visible: true, timeout: 0 });
 
   // Click on sort dropdown and click on recent posts

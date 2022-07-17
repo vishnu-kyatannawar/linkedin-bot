@@ -26,7 +26,7 @@ async function scrollUntilElement(page, scrollElementQuerySelector, elementXPath
   // For now using this as a hacky fix, will improve this later
   const maxScroll = 20;
   let scrollCount = 0;
-  
+
   while(!await elementExists(page, elementXPath)) {
     await scrollDown(page, scrollElementQuerySelector, scrollPx);
     await delay(2000);
@@ -56,16 +56,16 @@ async function shareAndLike(page) {
 	      shareIcon.click();
 
         // Wait for 0.5 seconds and then click on repost and like button
-        await delay(1000);	      
+        await delay(1000);
 	      let reportBtn = shareIcon.closest('.feed-shared-social-action-bar__action-button').querySelector('div.social-reshare-button__sharing-as-is-dropdown-item');
-	      reportBtn.click()        
+	      reportBtn.click();
         currPostLikeBtn.click();
 
         // Wait for 0.5 seconds and then move to next button
         await delay(1000);
-      }      
+      }
     }
-    
+
     await shareAndLike();
   });
 }
