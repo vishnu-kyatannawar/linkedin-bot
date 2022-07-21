@@ -1,7 +1,7 @@
 import { argv } from 'node:process';
 import { helper } from './helper.js';
 import puppeteer from 'puppeteer';
-const debuggingMode = false;
+const debuggingMode = true;
 
 // Company posts page
 const loginPage = 'https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin';
@@ -34,10 +34,8 @@ const password = process.env.LINKEDIN_PASSWORD;
   await page.goto(loginPage, { waitUntil: 'networkidle0' });
   await page.type('#username', emailAddress);
   await page.type('#password', password);
-  await Promise.all([
-    page.click('button[type=submit]'),
-    page.waitForNavigation({ waitUntil: 'networkidle2' })
-  ]);
+  await page.click('button[type=submit]');
+  await helper.delay(10000);
 
   // Now go to company page link since we are signed in
   await page.goto(pageLink);
@@ -49,7 +47,7 @@ const password = process.env.LINKEDIN_PASSWORD;
   await page.click('button[data-control-name="feed_sort_dropdown_trigger"]');
 
   // FIXME: Checking if dropdown is show after some delay, so added this delay
-  await helper.delay(3000);
+  await helper.delay(5000);
   const sortDropDown = await page.$x('//button[contains(., "Recent")]');
   await sortDropDown[0].click();
 
