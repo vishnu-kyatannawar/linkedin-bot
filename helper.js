@@ -52,7 +52,7 @@ async function shareAndLike(page) {
     async function shareAndLike () {
       for (i = 0; i < likeButtons.length; i++) {
         let currPostLikeBtn = likeButtons[i];
-        let shareIcon = currPostLikeBtn.closest('div.feed-shared-social-actions').querySelector('[type="share-linkedin-icon"]');
+        let shareIcon = currPostLikeBtn.closest('div.feed-shared-social-actions').querySelector('.social-reshare-button');
 	      shareIcon.click();
 
         // Wait for 0.5 seconds and then click on repost and like button
