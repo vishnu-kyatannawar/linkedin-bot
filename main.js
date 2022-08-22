@@ -5,7 +5,7 @@ const debuggingMode = false;
 
 // Company posts page
 const loginPage = 'https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin';
-const pageLink = argv[2];
+const pageLinks = argv.splice(2);
 const emailAddress = process.env.LINKEDIN_EMAIL_ADDRESS;
 const password = process.env.LINKEDIN_PASSWORD;
 
@@ -37,34 +37,40 @@ const password = process.env.LINKEDIN_PASSWORD;
   await page.click('button[type=submit]');
   await helper.delay(10000);
 
-  // Now go to company page link since we are signed in
-  await page.goto(pageLink);
+  // Loop over each page
+  for(let i = 0; i < pageLinks.length; i++) {
+    const pageLink = pageLinks[i];
 
-  // Wait until the company post page loads
-  await page.waitForSelector('button[data-control-name="feed_sort_dropdown_trigger"]', { visible: true, timeout: 0 });
+    // Now go to company page link since we are signed in
+    await page.goto(pageLink);
 
-  // Click on sort dropdown and click on recent posts
-  await page.click('button[data-control-name="feed_sort_dropdown_trigger"]');
+    // Wait until the company post page loads
+    await page.waitForSelector('button[data-control-name="feed_sort_dropdown_trigger"]', { visible: true, timeout: 0 });
 
-  // FIXME: Checking if dropdown is show after some delay, so added this delay
-  await helper.delay(5000);
-  const sortDropDown = await page.$x('//button[contains(., "Recent")]');
-  await sortDropDown[0].click();
+    // Click on sort dropdown and click on recent posts
+    await page.click('button[data-control-name="feed_sort_dropdown_trigger"]');
 
-  // Now we have to scroll down till the last liked post
-  // It does not guarantee that it will cover all posts, since there might be posts which are liked manually in between
-  // Also we don't want to scroll through all the posts
-  const likedButtonXpath = '//span[contains(@class, "reactions-react-button")]/button[@aria-pressed = "true"]'
-  const elementFound = await helper.scrollUntilElement(page, 'html', likedButtonXpath);
+    // FIXME: Checking if dropdown is show after some delay, so added this delay
+    await helper.delay(5000);
+    const sortDropDown = await page.$x('//button[contains(., "Recent")]');
+    await sortDropDown[0].click();
 
-  // Case when there is no history of last liked post
-  if (!elementFound) {
-    console.log('We did not find any previously liked post');
+    // Now we have to scroll down till the last liked post
+    // It does not guarantee that it will cover all posts, since there might be posts which are liked manually in between
+    // Also we don't want to scroll through all the posts
+    const likedButtonXpath = '//span[contains(@class, "reactions-react-button")]/button[@aria-pressed = "true"]'
+    const elementFound = await helper.scrollUntilElement(page, 'html', likedButtonXpath);
+
+    // Case when there is no history of last liked post
+    if (!elementFound) {
+      console.log('We did not find any previously liked post');
+    }
+
+    await helper.shareAndLike(page);
+
+    console.log('Liked and shared all new posts');
+    await helper.delay(2000);
   }
 
-  await helper.shareAndLike(page);
-
-  console.log('Liked and shared all new posts');
-  await helper.delay(2000);
   await browser.close();
 })();
