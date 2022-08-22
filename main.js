@@ -40,6 +40,7 @@ const password = process.env.LINKEDIN_PASSWORD;
   // Loop over each page
   for(let i = 0; i < pageLinks.length; i++) {
     const pageLink = pageLinks[i];
+    console.log(`Process started for: ${pageLink}`);
 
     // Now go to company page link since we are signed in
     await page.goto(pageLink);
