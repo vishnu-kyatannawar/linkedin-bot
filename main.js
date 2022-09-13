@@ -46,10 +46,10 @@ const password = process.env.LINKEDIN_PASSWORD;
     await page.goto(pageLink);
 
     // Wait until the company post page loads
-    await page.waitForSelector('button[data-control-name="feed_sort_dropdown_trigger"]', { visible: true, timeout: 0 });
+    await page.waitForSelector('.sort-dropdown__dropdown > button', { visible: true, timeout: 0 });
 
     // Click on sort dropdown and click on recent posts
-    await page.click('button[data-control-name="feed_sort_dropdown_trigger"]');
+    await page.click('.sort-dropdown__dropdown > button');
 
     // FIXME: Checking if dropdown is show after some delay, so added this delay
     await helper.delay(5000);
