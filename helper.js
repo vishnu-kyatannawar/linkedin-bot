@@ -57,7 +57,7 @@ async function shareAndLike(page) {
 
         // Wait for 0.5 seconds and then click on repost and like button
         await delay(1000);
-	      let reportBtn = shareIcon.closest('.feed-shared-social-action-bar__action-button').querySelector('div.social-reshare-button__sharing-as-is-dropdown-item');
+	      let reportBtn = shareIcon.closest('.feed-shared-social-action-bar__action-button').querySelectorAll('ul li')[1].querySelector('div');
 	      reportBtn.click();
         currPostLikeBtn.click();
 
